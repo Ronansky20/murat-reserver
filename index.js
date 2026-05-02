@@ -58,7 +58,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
                 flags: MessageFlags.Ephemeral,
             });
         } else {
-            await interaction.replied({
+            await interaction.reply({
                 content: 'There was an error while executing this command brev...',
                 flags: MessageFlags.Ephemeral,
             });
