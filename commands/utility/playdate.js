@@ -70,7 +70,7 @@ export async function execute(interaction) {
                 components: []
             });
         } else if (confirmation.customId === 'deny_playdate') {
-            await.confirmation.update({
+            await confirmation.update({
                 content: `**PLAYDATE DENIED** \nMurat ain't home at <t:${proposedTimestamp}:t> dawg`,
                 components: []
             });
