@@ -17,7 +17,7 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export function execute(interaction) {
+export async function execute(interaction) {
     const humanTime = interaction.options.getString('given_time')
     const parsedDate = chrono.parseDate(humanTime)
 
