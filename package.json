@@ -1,6 +1,11 @@
 {
+  "name": "murat-reserver",
+  "version": "0.1.1",
+  "type": "module",
+  "main": "index.js",
   "dependencies": {
-    "discord.js": "^14.26.4"
+    "discord.js": "^14.26.4",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
