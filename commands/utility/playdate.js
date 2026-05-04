@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel } from "discord.js";
 import * as chrono from 'chrono-node';
 
 const MURAT_ID = '846146160104177674'
@@ -65,10 +65,33 @@ export async function execute(interaction) {
         const confirmation = await response.awaitMessageComponent({ filter: collectorFilter });
 
         if (confirmation.customId === 'confirm_playdate') {
-            await confirmation.update({
-                content: `**PLAYDATE CONFIRMED!** \nMurat has agreed fam. He will be there at <t:${proposedTimestamp}:t>.`,
-                components: []
-            });
+            const eventManager = interaction.guild.scheduledEvents;
+
+            try {
+                const newEvent = await eventManager.create({
+                    name: playdateActivity,
+                    scheduledStartTime: parsedDate,
+                    scheduledEndTime: new Date(parsedDate.getTime() + (60 * 60 * 1000)),
+                    privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
+                    entityType: GuildScheduledEventEntityType.Voice,
+                    channel: '1118945553259171965',
+                    description: `Play ${playdateActivity} with the gang.`,
+                    reason: `Made by ${interaction.user.username}`
+                })
+
+                await confirmation.update({
+                    content: `**PLAYDATE CONFIRMED!** \nMurat has agreed fam. He will be there at <t:${proposedTimestamp}:t>.`,
+                    components: []
+                });
+            } catch (eventError) {
+                console.error("Failed to create the scheduled event:", eventError);
+
+                await confirmation.update({
+                    content: `**PLAYDATE CONFIRMED!** \nMurat has agreed fam. He will be there at <t:${proposedTimestamp}:t>. However I wasn't able to make the event brotha, please dm Ronan something got shanked chief`,
+                    components: []
+                })
+            }
+
         } else if (confirmation.customId === 'deny_playdate') {
             await confirmation.update({
                 content: `**PLAYDATE DENIED** \nMurat ain't home at <t:${proposedTimestamp}:t> dawg`,
