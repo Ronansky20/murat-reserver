@@ -1,5 +1,4 @@
 import 'dotenv/config';
-//import config from './config.json' with { type: 'json' };
 
 import { Client, Collection, Events, GatewayIntentBits, MessageFlags, REST, Routes } from 'discord.js';
 import fs from 'node:fs';
