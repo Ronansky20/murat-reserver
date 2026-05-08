@@ -16,7 +16,15 @@ export async function indexSteamUsers(profileUrl) {
 
         const response = await fetch(`https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=${token}&vanityurl=${vanityName}`)
         const data = await response.json()
+
+        if (data.response.success === 1) {
+            return await data.response.steamid
+        } else {
+            console.error('Steam API response error, please check if the entered profile is correct.')
+        }
     } else if (profileUrl.includes('/profiles/')) {
-        const vanityName = urlParser(profileUrl, 'profiles')
+        const steamId = urlParser(profileUrl, 'profiles')
+
+        return steamId
     }
 }
