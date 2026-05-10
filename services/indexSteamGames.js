@@ -11,8 +11,6 @@ export async function indexSteamGames(profileUrl) {
     const data = await response.json()
     const gameNames = data.response.games.map(game => game.name)
 
-
-
     let writeFileContent = {}
 
     try {
